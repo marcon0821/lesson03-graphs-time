@@ -57,5 +57,34 @@ else:
 
 st.divider()
 
-st.header("2. (그래프 추가 예정)")
+st.header("2. TOP 5 영화 일일 관객수 비교")
+
+# 1. 일관객 합계가 가장 큰 상위 5개 영화 이름 추출
+top5_movies = df.groupby('영화명')['일관객'].sum().nlargest(5).index.tolist()
+
+# 2. 상위 5개 영화의 데이터만 필터링
+top5_data = df[df['영화명'].isin(top5_movies)]
+
+# 3. Plotly 다중 선 그래프 생성 (color='영화명'으로 색상 구분)
+fig2 = px.line(
+    top5_data, 
+    x='날짜', 
+    y='일관객', 
+    color='영화명',
+    title="총 관객수 TOP 5 영화의 일일 관객수 변화 추이",
+    labels={'일관객': '관객수(명)', '날짜': '날짜', '영화명': '영화 제목'}
+)
+
+# 툴팁(마우스 오버) 설정: 영화 이름, 날짜, 관객수 표시
+fig2.update_traces(hovertemplate='<b>%{fullData.name}</b><br>날짜: %{x}<br>관객수: %{y:,.0f}명')
+
+# 4. 스트림릿에 그래프 표시 (범례 클릭 시 영화 켜고 끄기는 Plotly 기본 동작으로 지원됨)
+st.plotly_chart(fig2, use_container_width=True)
+
+# 알 수 있는 점 입력 칸
+st.info("💡 **이 그래프로 알 수 있는 것:** (이곳에 한 문장 요약을 적어주세요.)")
+
+st.divider()
+
+st.header("3. (그래프 추가 예정)")
 st.write("이곳에 다음 그래프가 추가될 예정입니다.")

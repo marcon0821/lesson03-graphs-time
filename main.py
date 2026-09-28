@@ -7,7 +7,7 @@ st.title("🎬 영화 데이터 그래프 도감 1 - 시간")
 
 @st.cache_data
 def load_data():
-    url = "https://raw.githubusercontent.com/greatsong/modudata/main/data/kobis_daily.csv"
+    url = "https://raw.githubusercontent.com/happykth/data/main/kobis_daily.csv"
     # 날짜 열을 문자열로 읽어오기 위해 dtype 설정
     df = pd.read_csv(url, dtype={'날짜': str})
     
